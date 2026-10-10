@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Break — Cardápio</title>
+<meta name="description" content="Cardápio da The Break · Cokitchen &amp; Coffee no Città America: café, fermentação natural e bebidas artesanais.">
+<meta name="theme-color" content="#FFB3BF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Montserrat:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: printed-menu look on a single centered 640px column. Logo header, sticky pill bar, search, bordered rounded section boxes, house quotes between blocks. Single pink theme on purpose (brand). */
+:root {
+  --pink: #FFB3BF;
+  --pink-light: #FFCDD5;
+  --ink: #111111;
+  --ink-soft: #2B2124;
+  --font-title: "Bree Serif", Georgia, serif;
+  --font-body: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--pink); }
+body {
+  margin: 0; background: var(--pink); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.45;
+  padding-inline: 16px; padding-block: 0 96px;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap { max-width: 640px; margin-inline: auto; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+
+/* Header */
+.top { display: grid; justify-items: center; gap: 14px; padding-block: 28px 20px; text-align: center; }
+.logo { width: min(64vw, 220px); height: auto; display: block; }
+.logo text { fill: var(--ink); }
+.tagline { margin: 0; font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+.motto { margin: 0; border: 2px solid var(--ink); padding: 10px 18px; font-weight: 600; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; text-wrap: balance; }
+
+/* Sticky category bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  margin-inline: -16px; padding: 10px 16px; background: var(--pink); border-bottom: 2px solid var(--ink);
+}
+.pills { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; max-width: 640px; margin-inline: auto; -webkit-overflow-scrolling: touch; }
+.pills::-webkit-scrollbar { display: none; }
+.pill {
+  flex: none; min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px;
+  border: 2px solid var(--ink); border-radius: 999px; background: var(--pink); color: var(--ink);
+  font: 700 14px var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer;
+}
+.pill[aria-current="true"] { background: var(--ink); color: var(--pink); }
+
+/* Search */
+.search { position: relative; margin-block: 16px 0; }
+.search input {
+  width: 100%; min-height: 48px; padding: 0 48px 0 16px; border: 2px solid var(--ink); border-radius: 999px;
+  background: var(--pink-light); color: var(--ink); font: 500 16px var(--font-body);
+}
+.search input::placeholder { color: var(--ink-soft); opacity: .75; }
+.search input:focus { outline: none; box-shadow: 0 0 0 3px var(--ink); }
+.clear {
+  position: absolute; right: 2px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px;
+  border: 0; border-radius: 50%; background: transparent; color: var(--ink); font: 700 20px var(--font-body); cursor: pointer;
+}
+.empty { margin: 24px 0 0; padding: 28px 16px; border: 2px dashed var(--ink); border-radius: 20px; text-align: center; font-weight: 600; }
+
+/* Bread strip */
+.strip { margin-top: 16px; border: 2px solid var(--ink); padding: 12px 14px; text-align: center; font-weight: 800; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; text-wrap: balance; }
+
+/* Sections */
+#menu { display: grid; gap: 16px; margin-top: 16px; }
+.section { border: 2px solid var(--ink); border-radius: 20px; padding: 20px 18px 8px; scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px)); }
+.section h2 { margin: 0; font-family: var(--font-title); font-weight: 400; font-size: 26px; line-height: 1.15; text-transform: uppercase; text-wrap: balance; }
+.sec-note { margin: 6px 0 0; font-size: 15px; font-weight: 600; }
+.badge { display: inline-block; margin-top: 8px; padding: 3px 10px; border: 2px solid var(--ink); border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.items { list-style: none; margin: 14px 0 0; padding: 0; }
+.item { padding-block: 12px; border-top: 1.5px solid rgb(17 17 17 / .18); }
+.item:first-child { border-top: 0; padding-top: 4px; }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.name { margin: 0; font-weight: 700; font-size: 16px; letter-spacing: .03em; text-transform: uppercase; min-width: 0; }
+.price { font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.desc { margin: 4px 0 0; font-size: 15px; font-weight: 400; color: var(--ink); max-width: 52ch; }
+mark { background: var(--ink); color: var(--pink); padding: 0 2px; border-radius: 3px; }
+
+.quote { margin: 8px 0; padding: 18px 8px; text-align: center; font-family: var(--font-title); font-size: 21px; line-height: 1.3; text-wrap: balance; }
+
+/* Footer */
+footer { margin-top: 28px; border: 2px solid var(--ink); border-radius: 20px; padding: 16px 18px; display: grid; gap: 4px; text-align: center; font-size: 14px; font-weight: 600; }
+footer a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; text-decoration: underline; text-underline-offset: 3px; text-wrap: balance; }
+footer small { font-weight: 400; font-size: 13px; }
+
+/* Back to top */
+.totop {
+  position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 30;
+  width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--ink); background: var(--ink); color: var(--pink);
+  font: 800 20px var(--font-body); cursor: pointer; display: grid; place-items: center;
+}
+
+@media (min-width: 700px) {
+  .section { padding: 24px 24px 10px; }
+  .section h2 { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <svg class="logo" viewBox="0 0 240 240" role="img" aria-label="The Break · Cokitchen &amp; Coffee">
+      <defs><path id="arc" d="M35.4 93.2 A90 90 0 0 1 208 105.3"/></defs>
+      <path d="M217.8 103.2 A100 100 0 1 1 26 89.8" fill="none" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+      <text font-family="Montserrat, sans-serif" font-weight="700" font-size="14"><textPath href="#arc" textLength="226" lengthAdjust="spacing">• COKITCHEN &amp; COFFEE •</textPath></text>
+      <text x="40" y="128" font-family="Montserrat, sans-serif" font-weight="800" font-size="50" textLength="104" lengthAdjust="spacingAndGlyphs">THE</text>
+      <text x="30" y="184" font-family="Montserrat, sans-serif" font-weight="800" font-size="58" textLength="184" lengthAdjust="spacingAndGlyphs">BREAK</text>
+    </svg>
+    <p class="tagline">Café • Fermentação natural • Bebidas artesanais</p>
+    <p class="motto">Porque alguns minutos podem mudar o seu dia.</p>
+  </header>
+</div>
+
+<nav class="bar" aria-label="Categorias do cardápio">
+  <div class="pills" id="pills"></div>
+</nav>
+
+<main class="wrap">
+  <div class="search" role="search">
+    <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Buscar no cardápio</label>
+    <input id="q" type="search" placeholder="Buscar no cardápio…" autocomplete="off" enterkeyhint="search">
+    <button class="clear" id="clear" type="button" aria-label="Limpar busca" hidden>×</button>
+  </div>
+  <p class="empty" id="empty" hidden>Nenhum item encontrado</p>
+  <p class="strip" id="strip">Escolha seu pão: Francês • Brioche • Sourdough</p>
+  <div id="menu"></div>
+
+  <footer>
+    <a href="https://instagram.com/thebreak.co" target="_blank" rel="noopener">Instagram @thebreak.co</a>
+    <a href="https://www.google.com/maps/search/?api=1&amp;query=Av.%20das%20Am%C3%A9ricas%2C%20700%20Loja%201415%20Bloco%208%20Citt%C3%A0%20America%20Rio%20de%20Janeiro" target="_blank" rel="noopener">Av. das Américas, 700 – Loja 1415, Bloco 8 – Città America</a>
+    <small>Preços sujeitos a alteração</small>
+  </footer>
+</main>
+
+<button class="totop" id="totop" type="button" aria-label="Voltar ao topo" hidden>↑</button>
+
+<script>
+/* ================= CARDÁPIO =================
+   Para mudar um preço, edite só o número da linha do item.
+   Formato: [nome, preço, descrição (opcional)]
+   Uma "frase" depois da seção aparece como respiro entre os blocos. */
+const CARDAPIO = [
+  { id: "cafe-da-manha", titulo: "Café da Manhã", itens: [
+    ["Toast na Manteiga", 8.00, "Fatia de pão artesanal tostada na manteiga."],
+    ["Toast Queijo Selado", 12.00, "Toast artesanal com queijo minas dourado na chapa."],
+    ["Egg in a Hole", 14.30, "Sourdough tostado com ovo preparado no centro do pão."],
+    ["Ovos Mexidos", 9.00, "Dois ovos cremosos preparados na manteiga."],
+    ["Ovos Crocante", 15.70, "Ovos com queijo dourado formando uma crosta crocante."],
+    ["Sanduíche de Ovo", 15.70, "Dois ovos mexidos no pão artesanal à sua escolha."]
+  ]},
+  { id: "toasts", titulo: "Toasts & Sanduíches", itens: [
+    ["Queijo Quente", 18.80, "Queijo minas curado dourado no pão artesanal."],
+    ["Misto Presunto", 20.80, "Presunto e queijo minas curado."],
+    ["Misto Peito de Peru", 22.80, "Peito de peru e queijo minas curado."],
+    ["Caprese", 23.80, "Queijo minas, pesto artesanal e tomate-cereja."],
+    ["Frango com Queijo", 25.80, "Frango temperado e queijo minas curado."],
+    ["Carne com Queijo", 28.30, "Carne desfiada lentamente e queijo minas curado."]
+  ]},
+  { id: "tapiocas", titulo: "Tapiocas & Cuscuz", nota: "Escolha entre tapioca ou cuscuz.", itens: [
+    ["Queijo Crocante", 16.50, "Queijo minas dourado até formar crosta crocante."],
+    ["Queijo Crocante e Ovo", 17.50, "Queijo crocante acompanhado de ovo."],
+    ["Banana, Mel e Canela", 18.80, "Banana grelhada com queijo, mel e canela."],
+    ["Frango com Queijo", 24.80, "Frango desfiado e queijo minas curado."],
+    ["Carne com Queijo", 26.80, "Carne desfiada e queijo minas curado."]
+  ]},
+  { id: "vitrine", titulo: "Da Vitrine", itens: [
+    ["Pão de Queijo", 3.00],
+    ["Mini Pão de Tapioca", 4.00, "Recheado com cream cheese."],
+    ["Pão de Tapioca (75 g)", 11.50],
+    ["Folhado", 15.00],
+    ["Pastel de Forno", 16.00],
+    ["Quiche", 15.00],
+    ["Empada", 16.00],
+    ["Pizza al Taglio", 18.00, "De fermentação natural."],
+    ["Pães Recheados Artesanais", 17.00, "Preparados com o nosso brioche da casa de fermentação natural. Sabores: 4 queijos • queijo e presunto • hot dog • pesto com queijo e tomate • calabresa."]
+  ]},
+  { id: "doces", titulo: "Doces", itens: [
+    ["Brigadeiro Gourmet", 7.00, "Tradicional • amargo • palha italiana • beijinho."],
+    ["Muffin", 10.00],
+    ["Fatia de Bolo", 13.00],
+    ["Donuts", 13.80]
+  ]},
+  { id: "yogurt", titulo: "Yogurt", frase: "Ingredientes simples. Processos artesanais. Sabor de verdade.", itens: [
+    ["Yogurt Natural", 17.80, "Yogurt infinito produzido na casa, adoçado com ameixas ou tâmaras."]
+  ]},
+  { id: "fermentadas", titulo: "Bebidas Fermentadas Naturalmente", curto: "Fermentadas", itens: [
+    ["Ginger Beer", 14.80, "Refrigerante natural de gengibre fermentado."],
+    ["Limão Siciliano", 14.80, "Refrigerante artesanal fermentado com gengibre."],
+    ["Hibisco", 14.80, "Refrigerante artesanal fermentado com gengibre."],
+    ["Kombuchás", 14.80, "Kombuchá artesanal saborizada a frio com frutas frescas."]
+  ]},
+  { id: "shake", titulo: "Shake com Fermentação Natural", curto: "Shakes", frase: "O tempo transforma os ingredientes. A pausa transforma o seu dia.", itens: [
+    ["Whey Fusion Siciliano", 27.00, "Whey + abacaxi + limão siciliano fermentado."],
+    ["Whey Fusion Hibisco", 27.00, "Whey + morango + beterraba + hibisco fermentado."]
+  ]},
+  { id: "cafes", titulo: "Cafés", itens: [
+    ["Café Coado", 5.00],
+    ["Pingado", 5.40],
+    ["Coado Duplo", 8.50],
+    ["Média", 8.00],
+    ["Espresso", 10.00],
+    ["Macchiato", 10.30],
+    ["Espresso Duplo", 16.00],
+    ["Mocha Latte", 15.50],
+    ["Capuccino Clássico", 15.30],
+    ["Capuccino Avelã", 15.30],
+    ["Chocolate", 15.30, "Quente ou frio."],
+    ["Descafeinado", 10.50],
+    ["Chá da Casa", 9.80],
+    ["Todinho", 7.00],
+    ["YoPro", 15.00]
+  ]},
+  { id: "bebidas", titulo: "Bebidas", frase: "Mais do que um café. Um momento para desacelerar.", itens: [
+    ["Água Mineral", 4.00],
+    ["Água com Gás", 5.00],
+    ["Refrigerante Mini", 5.00],
+    ["Refrigerante Lata", 8.50],
+    ["Guaravita", 5.00],
+    ["Guaraviton", 8.00],
+    ["Guará Army", 10.00],
+    ["Mate Leão", 9.50],
+    ["Mate da Casa", 9.50],
+    ["Água de Coco", 11.00],
+    ["Limonada", 11.00],
+    ["Suco de Laranja", 13.00],
+    ["Sucos Especiais", 16.80],
+    ["Cerveja", 13.00],
+    ["Red Bull", 18.00]
+  ]},
+  { id: "paes", titulo: "Pães Artesanais", curto: "Pães", levar: true, itens: [
+    ["Pão Brioche da Casa", 25.00, "Nosso pão de brioche artesanal, macio, amanteigado e produzido com longa fermentação."],
+    ["Sourdough da Casa", 27.00, "Feito com farinha, água, sal e nosso levain. Macio e ideal para nossos sanduíches."],
+    ["Grissini de Parmesão", 13.80, "Produzidos artesanalmente a partir do nosso levain."]
+  ]},
+  { id: "mercearia", titulo: "Mercearia", levar: true, itens: [
+    ["Pasta de Amendoim", 17.00, "Amendoins torrados e moídos artesanalmente, finalizados com uma pitada de flor de sal."],
+    ["Granola", 50.00, "Nossa receita artesanal de granola de flocos de milho, assada lentamente para uma crocância irresistível."]
+  ]}
+];
+
+/* ================= Render ================= */
+const preco = n => "R$ " + n.toFixed(2).replace(".", ",");
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function realce(texto, q) {
+  if (!q) return esc(texto);
+  const n = norm(texto), i = n.indexOf(q);
+  if (i < 0) return esc(texto);
+  return esc(texto.slice(0, i)) + "<mark>" + esc(texto.slice(i, i + q.length)) + "</mark>" + esc(texto.slice(i + q.length));
+}
+
+const $menu = document.getElementById("menu"), $pills = document.getElementById("pills");
+$pills.innerHTML = CARDAPIO.map(s => `<a class="pill" href="#${s.id}" data-id="${s.id}">${s.curto || s.titulo}</a>`).join("");
+
+function render(q = "") {
+  let total = 0, html = "";
+  for (const s of CARDAPIO) {
+    const secMatch = q && norm(s.titulo).includes(q);
+    const itens = q && !secMatch ? s.itens.filter(([n, , d]) => norm(n).includes(q) || (d && norm(d).includes(q))) : s.itens;
+    if (!itens.length) continue;
+    total += itens.length;
+    html += `<section class="section" id="${s.id}" aria-labelledby="h-${s.id}">
+      <h2 id="h-${s.id}">${esc(s.titulo)}</h2>
+      ${s.nota ? `<p class="sec-note">${esc(s.nota)}</p>` : ""}
+      ${s.levar ? `<span class="badge">Para levar</span>` : ""}
+      <ul class="items">${itens.map(([n, p, d]) => `
+        <li class="item"><div class="row"><h3 class="name">${realce(n, secMatch ? "" : q)}</h3><span class="price">${preco(p)}</span></div>${d ? `<p class="desc">${realce(d, secMatch ? "" : q)}</p>` : ""}</li>`).join("")}
+      </ul></section>`;
+    if (s.frase && !q) html += `<p class="quote">${esc(s.frase)}</p>`;
+  }
+  $menu.innerHTML = html;
+  document.getElementById("empty").hidden = total > 0;
+  document.getElementById("strip").hidden = !!q;
+  document.querySelectorAll(".pill").forEach(p => p.hidden = !document.getElementById(p.dataset.id));
+  observar();
+}
+
+/* ================= Pílula ativa ================= */
+let io;
+const visiveis = new Set();
+function ativar(id) {
+  document.querySelectorAll(".pill").forEach(p => {
+    const on = p.dataset.id === id;
+    p.setAttribute("aria-current", on ? "true" : "false");
+    if (on) {
+      const bar = $pills, left = p.offsetLeft - bar.clientWidth / 2 + p.offsetWidth / 2;
+      bar.scrollTo({ left, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }
+  });
+}
+function observar() {
+  if (io) io.disconnect();
+  visiveis.clear();
+  const barH = document.querySelector(".bar").offsetHeight;
+  io = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting ? visiveis.add(e.target.id) : visiveis.delete(e.target.id));
+    const primeira = CARDAPIO.find(s => visiveis.has(s.id));
+    if (primeira) ativar(primeira.id);
+  }, { rootMargin: `-${barH + 8}px 0px -55% 0px` });
+  document.querySelectorAll(".section").forEach(s => io.observe(s));
+}
+
+/* ================= Busca ================= */
+const $q = document.getElementById("q"), $clear = document.getElementById("clear");
+$q.addEventListener("input", () => { const q = norm($q.value.trim()); $clear.hidden = !q; render(q); });
+$clear.addEventListener("click", () => { $q.value = ""; $clear.hidden = true; render(); $q.focus(); });
+
+/* ================= Voltar ao topo ================= */
+const $top = document.getElementById("totop");
+addEventListener("scroll", () => { $top.hidden = scrollY < 600; }, { passive: true });
+$top.addEventListener("click", () => scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
+
+render();
+</script>
+</body>
+</html>
